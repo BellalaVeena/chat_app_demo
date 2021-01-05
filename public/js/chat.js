@@ -30,8 +30,6 @@ document.querySelector('#message-form').addEventListener("submit",(e)=>{
            return console.log(error)
        }
        console.log("deliverd")
-
-       
     })
 
 })

@@ -1,24 +1,16 @@
 <html>
-    <head>
-
-    </head>
+    <head></head>
     <body>
         chat app 
-
         <div id="messages"></div>
-
-
         <form id="message-form">
             <input name="message" type='text' placeholder="message">
             <button>Send</button>
         </form>
+
         <button id='send-location'>send location</button>
-
-
         <script id='message-template' type="text/html">
-            <div>
-                <p>{{message}}</p>
-            </div>
+            <div><p>{{message}}</p></div>
         </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
@@ -28,5 +20,4 @@
         <script src="/socket.io/socket.io.js"></script>
         <script src="js/chat.js"></script>
     </body>
-
 </html>
