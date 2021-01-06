@@ -51,10 +51,7 @@ io.on("connection",(socket)=>{
             chatMessage.save();
          
           });
-
-         
-
-        })
+    })
     socket.on('disconnect',()=>{
         io.emit('message',generateMessage('new user joined'))
     })
