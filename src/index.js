@@ -44,6 +44,7 @@ io.on("connection",(socket)=>{
     socket.on('sendLocation',(coords,callback)=>{
         const url=`https://google.com/maps?q=${coords.latitude},${coords.longitude}`
         io.emit("locationmessage",generateMessage(url))
+        
         callback('recevid')
         connect.then(db => {
             console.log("connected correctly to the server");
