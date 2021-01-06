@@ -5,6 +5,7 @@ const path=require('path');
 const Filter=require('bad-words');
 const Chat = require("../schema/chat_schema");
 const connect = require("../db");
+const {generateMessage}  = require('./utils/messages')
 
 
 const app=express();
@@ -18,15 +19,18 @@ app.use(express.static(publichDirectoryPath))
 
 io.on("connection",(socket)=>{
      console.log("New websocket connection");
-     socket.emit('message',"welcome")
-     socket.broadcast.emit('message','new user joined')
+
+     socket.emit('message' ,generateMessage("Welome to theapp"))
+     socket.broadcast.emit('message',generateMessage('new user joined'))
 
      socket.on('sendMessage',(message,callback)=>{
          const filter=new Filter()
+
          if(filter.isProfane(message)){
              return callback('bad words are not allowed')
            }
-        io.emit('message',message)
+
+        io.emit('message',generateMessage(message))
         callback()
 
 
@@ -39,16 +43,20 @@ io.on("connection",(socket)=>{
 
     socket.on('sendLocation',(coords,callback)=>{
         const url=`https://google.com/maps?q=${coords.latitude},${coords.longitude}`
-        io.emit("message",url)
+        io.emit("locationmessage",generateMessage(url))
         callback('recevid')
         connect.then(db => {
             console.log("connected correctly to the server");
             let chatMessage = new Chat({ message:url, sender: "Anonymous" });
             chatMessage.save();
+         
           });
+
+         
+
         })
     socket.on('disconnect',()=>{
-        io.emit('message','user has left')
+        io.emit('message',generateMessage('new user joined'))
     })
  })
    

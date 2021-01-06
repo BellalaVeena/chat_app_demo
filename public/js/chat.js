@@ -7,15 +7,26 @@ const $messages=document.querySelector("#messages")
 
 //templates
 const messageTemplate=document.querySelector("#message-template").innerHTML
+const locationMessageTemplate=document.querySelector("#location-message-template").innerHTML
 
 socket.on("message",(message)=>{
-    console.log(message)
+    console.log("messagefrom here",message)
     const html=Mustache.render(messageTemplate,{
-        message
+        message:message.text,
+        createdAt:moment(message.createdAt).format('h:mm a')
     })
     $messages.insertAdjacentHTML('beforeend',html)
 
 })
+socket.on("locationmessage",(url)=>{
+    console.log("url",url)
+    const html=Mustache.render(locationMessageTemplate,{
+        url:url.text,
+        createdAt:moment(url.createdAt).format('h:mm a')
+    })
+    $messages.insertAdjacentHTML('beforeend',html)
+})
+
 document.querySelector('#message-form').addEventListener("submit",(e)=>{
     e.preventDefault();
 
